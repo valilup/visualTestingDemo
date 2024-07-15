@@ -1,16 +1,7 @@
 import {test, expect} from "@playwright/test";
 
-test("Check full homepage page", async ({page}) => {
-  await page.goto("https://www.bmw.de");
-  await expect(page).toHaveScreenshot({fullPage:true});
-});
 
-test("Check full homepage page masking", async ({page}) => {
-  await page.goto("file:///Users/valilup/Desktop/Broken.html");
-  await expect(page).toHaveScreenshot({fullPage:true});
-});
-
-test.only("Find broken images", async({page}) =>{
+test("Find broken images", async({page}) =>{
   //increase test timeout because of a longer teste execution
   test.setTimeout(60000);
 
