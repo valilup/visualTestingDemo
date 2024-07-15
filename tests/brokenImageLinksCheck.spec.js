@@ -14,7 +14,6 @@ test("Check that the car image links are not broken", async ({page}) => {
     //count them
     console.log(await images.count());
 
-    /////////////
     //scrolls remaining before the script exits
     let scrollsRemaining = 30;
     //while we have scrolls remaining
@@ -28,28 +27,20 @@ test("Check that the car image links are not broken", async ({page}) => {
         //decrement the scrolls remaining
         scrollsRemaining--;
     }
-    /////////////
-
-
-    //scroll to the bottom of the page to load all of them
-    // await page.evaluate(() => window.scrollBy(0, document.body.scrollHeight));
-
-    // await page.waitForTimeout(1000);
 
     //get the src value of each image element
     const allImages = await images.all();
     for await (const img of allImages) {
         const imgSrc = await img.getAttribute("src");
         //check that it's not empty
-        expect(imgSrc?.length).toBeGreaterThan(1);
+        expect.soft(imgSrc?.length).toBeGreaterThan(1);
 
         if (imgSrc?.length > 1) {
             //check that the status code of the image is 200 (no broken image)
             const response = await page.request.get(imgSrc);
-            console.log(response.status());
 
             if (!(response.status() === 200)) {
-                console.log("Failed to load: " + imgSrc);
+                console.log("Failed to load following src resource: " + imgSrc);
             }
         }
     }
