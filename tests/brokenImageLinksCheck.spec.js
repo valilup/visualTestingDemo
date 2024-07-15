@@ -6,7 +6,7 @@ test("Check that the car image links are not broken", async ({page}) => {
     test.setTimeout(60000);
 
     //navigate to all models
-    await page.goto("https://www.bmw.de/de/neufahrzeuge.html", {waitUntil: "domcontentloaded"});
+    await page.goto("https://www.bmw.de/de/neufahrzeuge.html", {waitUntil: "networkidle"});
 
     //get all the car images
     const images = page.locator("img[class*='cmp-cosy-img cmp-modelcard__cosy-img']");
@@ -16,6 +16,8 @@ test("Check that the car image links are not broken", async ({page}) => {
 
     //scroll to the bottom of the page to load all of them
     await page.evaluate(() => window.scrollBy(0, document.body.scrollHeight));
+
+    await page.waitForTimeout(1000);
 
     //get the src value of each image element
     const allImages = await images.all();
