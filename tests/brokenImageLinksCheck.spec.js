@@ -41,6 +41,7 @@ test("Check that the car image links are not broken", async ({page}) => {
 
             if (!(response.status() === 200)) {
                 console.log("Failed to load following src resource: " + imgSrc);
+                expect.soft(response.status() === 200);
             }
         }
     }
