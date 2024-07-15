@@ -3,7 +3,7 @@ import {expect, test} from "@playwright/test";
 
 test("Check that the car image links are not broken", async ({page}) => {
     //increase test timeout because of a longer test execution
-    test.setTimeout(90000);
+    test.slow();
 
     //navigate to all models
     await page.goto("https://www.bmw.de/de/neufahrzeuge.html", {waitUntil: "networkidle"});
@@ -16,7 +16,7 @@ test("Check that the car image links are not broken", async ({page}) => {
 
     /////////////
     //scrolls remaining before the script exits
-    var scrollsRemaining = 30;
+    let scrollsRemaining = 30;
     //while we have scrolls remaining
     while (scrollsRemaining > 0) {
         //scroll down by 10,000 pixels
