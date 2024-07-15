@@ -1,7 +1,7 @@
 import {test, expect} from "@playwright/test";
 
 
-test("Find broken images", async({page}) =>{
+test("Check car images are not broken", async({page}) =>{
   //increase test timeout because of a longer teste execution
   test.setTimeout(60000);
 
@@ -22,7 +22,7 @@ test("Find broken images", async({page}) =>{
   for await (const img of allImages) {
     const imgSrc = await img.getAttribute("src");
     //check that it's not empty
-    expect.soft(imgSrc?.length).toBeGreaterThan(1);
+    expect.soft(imgSrc?.length, "Failed to load: "+ imgSrc).toBeGreaterThan(1);
 
     if (imgSrc?.length > 1) {
       //check that the status code of the image is 200 (no broken image)
