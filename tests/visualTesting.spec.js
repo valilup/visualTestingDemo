@@ -20,7 +20,7 @@ test("Visual test - checks the homepage full page", async({page}) => {
    await expect(page).toHaveScreenshot("homepage full page.png",{fullPage: true});
 });
 
-test.only("Visual test - check Made to Express section", async({page}) => {
+test("Visual test - check Made to Express section", async({page}) => {
    await page.goto("https://www.bmw.de", {waitUntil: "networkidle"});
 
    //accept cookies
