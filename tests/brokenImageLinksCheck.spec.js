@@ -9,6 +9,7 @@ test("Check that the car image links are not broken on the All Models page", asy
 
     //navigate to all models
     await modelPage.goto();
+    await page.getByRole('button', {name: 'Alle akzeptieren'}).click();
 
     //get all the car images
     const images = modelPage.carImages;
