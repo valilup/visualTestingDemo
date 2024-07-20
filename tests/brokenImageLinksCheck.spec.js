@@ -33,46 +33,49 @@ import {expect, test} from "../base";
 //         }
 //     }
 // });
-
-test("Check that the car image links are not broken on the All Models page", async ({page}) => {
+test.describe('Repeated test execution', () => {
+    for (let i = 0; i < 20; i++) {
+        test(`run ${i} Check that the car image links are not broken on the All Models page`, async ({page}) => {
 
 //increase test timeout because of a longer test execution
-    test.slow();
+            test.slow();
 //navigate to all models
-    await page.goto("https://www.bmw.de/de/neufahrzeuge.html", {waitUntil: "networkidle"});
+            await page.goto("https://www.bmw.de/de/neufahrzeuge.html", {waitUntil: "networkidle"});
 //get all the car images
-    const images = page.locator("img[class*='cmp-cosy-img cmp-modelcard__cosy-img']");
+            const images = page.locator("img[class*='cmp-cosy-img cmp-modelcard__cosy-img']");
 //count them
-    console.log(await images.count());
+            console.log(await images.count());
 //scrolls remaining before the script exits
-    let scrollsRemaining = 30;
+            let scrollsRemaining = 30;
 //while we have scrolls remaining
-    while (scrollsRemaining > 0) {
-        //scroll down by 10,000 pixels
-        await page.evaluate(() => window.scrollBy(0, 10000));
-        //use a hardcoded wait time of one second for content to load
-        await page.waitForLoadState("domcontentloaded", {
-            timeout: 10000
-        });
-        //decrement the scrolls remaining
-        scrollsRemaining--;
-    }
-//get the src value of each image element
-    const allImages = await images.all();
-    for await (const img of allImages) {
-        await page.waitForLoadState("load");
-        const imgSrc = await img.getAttribute("src");
-        //check that it's not empty
-        expect.soft(imgSrc?.length).toBeGreaterThan(1);
-        if (imgSrc?.length > 1) {
-            //check that the status code of the image is 200 (no broken image)
-            const response = await page.request.get(imgSrc);
-
-            if (!(response.status() === 200)) {
-                console.log("Failed to load following src resource: " + imgSrc);
-                expect.soft(response.status() === 200);
+            while (scrollsRemaining > 0) {
+                //scroll down by 10,000 pixels
+                await page.evaluate(() => window.scrollBy(0, 10000));
+                //use a hardcoded wait time of one second for content to load
+                await page.waitForLoadState("domcontentloaded", {
+                    timeout: 10000
+                });
+                //decrement the scrolls remaining
+                scrollsRemaining--;
             }
-        }
+//get the src value of each image element
+            const allImages = await images.all();
+            for await (const img of allImages) {
+                await page.waitForLoadState("load");
+                const imgSrc = await img.getAttribute("src");
+                //check that it's not empty
+                expect.soft(imgSrc?.length).toBeGreaterThan(1);
+                if (imgSrc?.length > 1) {
+                    //check that the status code of the image is 200 (no broken image)
+                    const response = await page.request.get(imgSrc);
+
+                    if (!(response.status() === 200)) {
+                        console.log("Failed to load following src resource: " + imgSrc);
+                        expect.soft(response.status() === 200);
+                    }
+                }
+            }
+        });
     }
 });
 
