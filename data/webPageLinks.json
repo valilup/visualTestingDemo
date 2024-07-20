@@ -14,10 +14,10 @@
   {"webPage": "Configurator page", "link": "https://www.bmw.de/de/konfigurator.html"},
   {"webPage": "New car search page", "link": "https://www.bmw.de/de-de/sl/neuwagensuche#/"},
   {"webPage": "Onlinekauf & -leasing page", "link": "https://www.bmw.de/de/topics/neuwagen/neuwagen-onlinekauf.html"},
-  {"webPage": "Used car search page", "link": "https://gebrauchtwagen.bmw.de/nsc/"},
+  {"webPage": "Used car search page", "link": "https://gebrauchtwagen.bmw.de/nsc/", "_comment_": "special case baseURL is different than www.bmw.de"},
   {"webPage": "BMW ConnectedDrive Store page", "link": "https://www.bmw.de/de/shop/ls/cp/connected-drive"},
   {"webPage": "BMW Accessories Store page", "link": "https://www.bmw.de/de/shop/ls/cp/physical-goods/de-BF_ACCESSORY"},
   {"webPage": "BMW Lifestyle Store page", "link": "https://www.bmw.de/de/shop/ls/cp/physical-goods/de-BF_LIFESTYLE"},
-  {"webPage": "BMW trade-in page", "link": "https://www.bmw.de/de/inzahlungnahme/"},
-  {"webPage": "Buy online page", "link": "https://www.bmw.de/de/shop/ls/cp/physical-goods/de-BF_ACCESSORY"}
+  {"webPage": "BMW trade-in page", "link": "https://www.bmw.de/de/inzahlungnahme/", "_comment_": "special case no clicking on accept cookies"},
+  {"webPage": "Buy online page", "link": "https://www.bmw.de/de/shop/ls/cp/physical-goods/de-BF_ACCESSORY", "_comment_": "special case no clicking on accept cookies"}
 ]

@@ -105,6 +105,6 @@ webPageLink.forEach((data) => {
             }
         }
         //at every end of the run log the number of broken links and where they occur for easier debugging
-        console.log(`${numberOfImages - count} links broken out of ${numberOfImages} on the ${webPage} link: ${data.link}`);
+        console.log(`${numberOfImages - count} links broken out of ${numberOfImages} on the ${data.webPage} link: ${data.link}`);
     })
 });
