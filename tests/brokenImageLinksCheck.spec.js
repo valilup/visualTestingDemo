@@ -51,7 +51,7 @@ test("Check that the car image links are not broken on the All Models page", asy
         //scroll down by 10,000 pixels
         await page.evaluate(() => window.scrollBy(0, 10000));
         //use a hardcoded wait time of one second for content to load
-        await page.waitForLoadState("networkidle", {
+        await page.waitForLoadState("domcontentloaded", {
             timeout: 10000
         });
         //decrement the scrolls remaining
@@ -60,6 +60,7 @@ test("Check that the car image links are not broken on the All Models page", asy
 //get the src value of each image element
     const allImages = await images.all();
     for await (const img of allImages) {
+        await page.waitForLoadState("load");
         const imgSrc = await img.getAttribute("src");
         //check that it's not empty
         expect.soft(imgSrc?.length).toBeGreaterThan(1);
