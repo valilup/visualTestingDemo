@@ -1,5 +1,6 @@
 import {expect, test} from "../base";
 import {scrollToTheBottomOfThePage} from "../utils/utils";
+import webPageLink from "../data/webPageLinks.json";
 
 
 test("Check that the car image links are not broken on the All Models page", async ({modelPage, page}) => {
@@ -34,49 +35,15 @@ test("Check that the car image links are not broken on the All Models page", asy
     }
 });
 
-[
-    {webPage: "Homepage", link: "https://www.bmw.de/de/index.html"},
-    {webPage: "BMW Electric cars page", link: "https://www.bmw.de/de/elektroauto.html"},
-    {webPage: "BMW Plugin Hybrid cars page", link: "https://www.bmw.de/de/elektroauto/plug-in-hybrid.html"},
-    {webPage: "The range of electric cars page", link: "https://www.bmw.de/de/elektroauto/elektroauto-reichweite.html"},
-    {webPage: "The cost of an electric car page", link: "https://www.bmw.de/de/elektroauto/elektroauto-kosten.html"},
-    {webPage: "The New Class page", link: "https://www.bmw.de/de/mehr-bmw/neue-klasse.html"},
-    {
-        webPage: "Everything about charging your BMW electric car page",
-        link: "https://www.bmw.de/de/elektroauto/elektroauto-laden.html"
-    },
-    {webPage: "Home Charging page", link: "https://www.bmw.de/de/elektroauto/elektroauto-laden/zuhause-laden.html"},
-    {
-        webPage: "Connected Home Charging page",
-        link: "https://www.bmw.de/de/elektroauto/elektroauto-laden/zuhause-laden/connected-home-charging.html"
-    },
-    {
-        webPage: "Public charging for electric cars page",
-        link: "https://www.bmw.de/de/elektroauto/elektroauto-laden/oeffentlich-laden.html"
-    },
-    {
-        webPage: "BMW video tutorials on electromobility page",
-        link: "https://www.bmw.de/de/elektroauto/video-tutorials.html"
-    },
-    {webPage: "Overview Online Stores page", link: "https://www.bmw.de/de/landingpage/shops.html"},
-    {webPage: "Configurator page", link: "https://www.bmw.de/de/konfigurator.html"},
-    {webPage: "New car search page", link: "https://www.bmw.de/de-de/sl/neuwagensuche#/"},
-    {webPage: "Onlinekauf & -leasing page", link: "https://www.bmw.de/de/topics/neuwagen/neuwagen-onlinekauf.html"},
-    {webPage: "Used car search page", link: "https://gebrauchtwagen.bmw.de/nsc/"}, //to be extracted from here special case
-    {webPage: "BMW ConnectedDrive Store page", link: "https://www.bmw.de/de/shop/ls/cp/connected-drive"},
-    {webPage: "BMW Accessories Store page", link: "https://www.bmw.de/de/shop/ls/cp/physical-goods/de-BF_ACCESSORY"},
-    {webPage: "BMW Lifestyle Store page", link: "https://www.bmw.de/de/shop/ls/cp/physical-goods/de-BF_LIFESTYLE"},
-    {webPage: "BMW trade-in page", link: "https://www.bmw.de/de/inzahlungnahme/"},
-    {webPage: "Buy online page", link: "https://www.bmw.de/de/shop/ls/cp/physical-goods/de-BF_ACCESSORY"},
-].forEach(({webPage, link}) => {
-    test(`Check if ${webPage} contains broken images the src of img elements`, async ({
+webPageLink.forEach((data) => {
+    test(`Check if ${data.webPage} contains broken images the src of img elements`, async ({
                                                                                           page,
                                                                                           request
                                                                                       }) => {
         let count = 0;
 
         //navigate to all models
-        await page.goto(`${link}`, {waitUntil: "load"});
+        await page.goto(`${data.link}`, {waitUntil: "load"});
         await page.getByRole('button', {name: 'Alle akzeptieren'}).click();
 
 
@@ -104,31 +71,40 @@ test("Check that the car image links are not broken on the All Models page", asy
         const allImages = await images.all();
         for await (const img of allImages) {
             const imgSrc = await img.getAttribute("src");
-            expect.soft(imgSrc?.length).toBeGreaterThan(1);
-            if (imgSrc?.length > 1) {
 
+            //check to see if you have a valid value in the src attribute
+            expect.soft(imgSrc?.length).toBeGreaterThan(1);
+
+            if (imgSrc?.length > 1) {
+                // some values do not have the baseURL so I have to append it after I get the value
                 if (imgSrc.includes("https://")) {
                     url = imgSrc;
                 } else {
                     url = "https://www.bmw.de" + imgSrc;
                 }
 
-
+                //make a request to check that the value is retrieved correctly
                 const response = await request.get(url, {
                     headers: {
                         accept: 'application/json',
                         "accept-encoding": 'application/json',
                     }
                 });
+
+                //expect status code to be 200
                 await expect.soft(response.status()).toEqual(200);
+
+                //if status is not 200 log the url and status code
                 if (!(response.status() === 200)) {
                     console.log(`Failed link: ${url} Status code: ${response.status()}`);
                 } else {
                     count++;
                 }
+                //reset response value
                 await response.dispose();
             }
         }
-        console.log(`${numberOfImages - count} links broken out of ${numberOfImages} on the ${webPage} link: ${link}`)
+        //at every end of the run log the number of broken links and where they occur for easier debugging
+        console.log(`${numberOfImages - count} links broken out of ${numberOfImages} on the ${webPage} link: ${data.link}`);
     })
 });

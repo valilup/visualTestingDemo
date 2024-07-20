@@ -1,0 +1,23 @@
+[
+  {"webPage": "Homepage", "link": "https://www.bmw.de/de/index.html"},
+  {"webPage": "BMW Electric cars page", "link": "https://www.bmw.de/de/elektroauto.html"},
+  {"webPage": "BMW Plugin Hybrid cars page", "link": "https://www.bmw.de/de/elektroauto/plug-in-hybrid.html"},
+  {"webPage": "The range of electric cars page", "link": "https://www.bmw.de/de/elektroauto/elektroauto-reichweite.html"},
+  {"webPage": "The cost of an electric car page", "link": "https://www.bmw.de/de/elektroauto/elektroauto-kosten.html"},
+  {"webPage": "The New Class page", "link": "https://www.bmw.de/de/mehr-bmw/neue-klasse.html"},
+  {"webPage": "Everything about charging your BMW electric car page", "link": "https://www.bmw.de/de/elektroauto/elektroauto-laden.html"},
+  {"webPage": "Home Charging page", "link": "https://www.bmw.de/de/elektroauto/elektroauto-laden/zuhause-laden.html"},
+  {"webPage": "Connected Home Charging page", "link": "https://www.bmw.de/de/elektroauto/elektroauto-laden/zuhause-laden/connected-home-charging.html"},
+  {"webPage": "Public charging for electric cars page", "link": "https://www.bmw.de/de/elektroauto/elektroauto-laden/oeffentlich-laden.html"},
+  {"webPage": "BMW video tutorials on electromobility page", "link": "https://www.bmw.de/de/elektroauto/video-tutorials.html"},
+  {"webPage": "Overview Online Stores page", "link": "https://www.bmw.de/de/landingpage/shops.html"},
+  {"webPage": "Configurator page", "link": "https://www.bmw.de/de/konfigurator.html"},
+  {"webPage": "New car search page", "link": "https://www.bmw.de/de-de/sl/neuwagensuche#/"},
+  {"webPage": "Onlinekauf & -leasing page", "link": "https://www.bmw.de/de/topics/neuwagen/neuwagen-onlinekauf.html"},
+  {"webPage": "Used car search page", "link": "https://gebrauchtwagen.bmw.de/nsc/"},
+  {"webPage": "BMW ConnectedDrive Store page", "link": "https://www.bmw.de/de/shop/ls/cp/connected-drive"},
+  {"webPage": "BMW Accessories Store page", "link": "https://www.bmw.de/de/shop/ls/cp/physical-goods/de-BF_ACCESSORY"},
+  {"webPage": "BMW Lifestyle Store page", "link": "https://www.bmw.de/de/shop/ls/cp/physical-goods/de-BF_LIFESTYLE"},
+  {"webPage": "BMW trade-in page", "link": "https://www.bmw.de/de/inzahlungnahme/"},
+  {"webPage": "Buy online page", "link": "https://www.bmw.de/de/shop/ls/cp/physical-goods/de-BF_ACCESSORY"}
+]
