@@ -6,6 +6,6 @@ exports.ModelPage = class ModelPage {
     }
 
     async goto() {
-        await this.page.goto('https://www.bmw.de/de/neufahrzeuge.html', { waitUntil: 'load' });
+        await this.page.goto('https://www.bmw.de/de/neufahrzeuge.html', { waitUntil: 'networkidle' });
     }
 };
