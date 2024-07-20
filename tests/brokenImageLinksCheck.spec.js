@@ -41,11 +41,23 @@ test("Check that the car image links are not broken on the All Models page", asy
     {webPage: "The range of electric cars page", link: "https://www.bmw.de/de/elektroauto/elektroauto-reichweite.html"},
     {webPage: "The cost of an electric car page", link: "https://www.bmw.de/de/elektroauto/elektroauto-kosten.html"},
     {webPage: "The New Class page", link: "https://www.bmw.de/de/mehr-bmw/neue-klasse.html"},
-    {webPage: "Everything about charging your BMW electric car page", link: "https://www.bmw.de/de/elektroauto/elektroauto-laden.html"},
+    {
+        webPage: "Everything about charging your BMW electric car page",
+        link: "https://www.bmw.de/de/elektroauto/elektroauto-laden.html"
+    },
     {webPage: "Home Charging page", link: "https://www.bmw.de/de/elektroauto/elektroauto-laden/zuhause-laden.html"},
-    {webPage: "Connected Home Charging page", link: "https://www.bmw.de/de/elektroauto/elektroauto-laden/zuhause-laden/connected-home-charging.html"},
-    {webPage: "Public charging for electric cars page", link: "https://www.bmw.de/de/elektroauto/elektroauto-laden/oeffentlich-laden.html"},
-    {webPage: "BMW video tutorials on electromobility page", link: "https://www.bmw.de/de/elektroauto/video-tutorials.html"},
+    {
+        webPage: "Connected Home Charging page",
+        link: "https://www.bmw.de/de/elektroauto/elektroauto-laden/zuhause-laden/connected-home-charging.html"
+    },
+    {
+        webPage: "Public charging for electric cars page",
+        link: "https://www.bmw.de/de/elektroauto/elektroauto-laden/oeffentlich-laden.html"
+    },
+    {
+        webPage: "BMW video tutorials on electromobility page",
+        link: "https://www.bmw.de/de/elektroauto/video-tutorials.html"
+    },
     {webPage: "Overview Online Stores page", link: "https://www.bmw.de/de/landingpage/shops.html"},
     {webPage: "Configurator page", link: "https://www.bmw.de/de/konfigurator.html"},
     {webPage: "New car search page", link: "https://www.bmw.de/de-de/sl/neuwagensuche#/"},
@@ -57,10 +69,10 @@ test("Check that the car image links are not broken on the All Models page", asy
     {webPage: "BMW trade-in page", link: "https://www.bmw.de/de/inzahlungnahme/"},
     {webPage: "Buy online page", link: "https://www.bmw.de/de/shop/ls/cp/physical-goods/de-BF_ACCESSORY"},
 ].forEach(({webPage, link}) => {
-    test.only(`Check if ${webPage} contains broken images the src of img elements`, async ({
-                                                                                                                            page,
-                                                                                                                            request
-                                                                                                                        }) => {
+    test(`Check if ${webPage} contains broken images the src of img elements`, async ({
+                                                                                          page,
+                                                                                          request
+                                                                                      }) => {
         let count = 0;
 
         //navigate to all models
