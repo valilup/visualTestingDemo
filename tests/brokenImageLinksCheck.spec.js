@@ -40,6 +40,7 @@ webPageLink.forEach((data) => {
                                                                                           page,
                                                                                           request
                                                                                       }) => {
+        test.slow();
         let count = 0;
 
         //navigate to all models
@@ -60,7 +61,7 @@ webPageLink.forEach((data) => {
             //decrement the scrolls remaining
             scrollsRemaining--;
         }
-        await page.waitForLoadState("domcontentloaded")
+        await page.waitForLoadState("load")
 
         //get all the car images
         const images = page.locator("img");
