@@ -5,7 +5,7 @@ exports.ModelPage = class ModelPage {
         this.carImages = page.locator("img[class*='cmp-cosy-img cmp-modelcard__cosy-img']");
     }
 
-    async goto() {
+    async gotoModelPage() {
         await this.page.goto('https://www.bmw.de/de/neufahrzeuge.html', { waitUntil: 'networkidle' });
     }
 };

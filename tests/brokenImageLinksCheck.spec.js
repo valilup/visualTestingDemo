@@ -8,7 +8,7 @@ test("Check that the car image links are not broken on the All Models page", asy
     test.slow();
 
     //navigate to all models
-    await modelPage.goto();
+    await modelPage.gotoModelPage();
     await page.getByRole('button', {name: 'Alle akzeptieren'}).click();
 
     //get all the car images
@@ -38,42 +38,26 @@ test("Check that the car image links are not broken on the All Models page", asy
 
 
 webPageLink.forEach((data) => {
-    test(`Check if ${data.webPage} contains broken images the src of img elements`, async ({
-                                                                                          page,
-                                                                                          request
-                                                                                      }) => {
+    test(`${data.webPage} - Check the webpages for broken images`, async ({
+                                                                                               page,
+                                                                                               request
+                                                                                           }) => {
         test.slow();
         let count = 0;
 
         //navigate to all models
         await page.goto(`${data.link}`, {waitUntil: "load"});
         await page.getByRole('button', {name: 'Alle akzeptieren'}).click();
-
-
-        // scrolls remaining before the script exits
-        let scrollsRemaining = 30;
-        //while we have scrolls remaining
-        while (scrollsRemaining > 0) {
-            //scroll down by 10,000 pixels
-            await page.evaluate(() => window.scrollBy(0, 10000));
-            //use a hardcoded wait time of one second for content to load
-            await page.waitForLoadState("networkidle", {
-                timeout: 10000
-            });
-            //decrement the scrolls remaining
-            scrollsRemaining--;
-        }
         await page.waitForLoadState("load")
 
         //get all the car images
-        const images = page.locator("img");
+        const images = page.locator("//img[contains(@src, 'preview3')]");
         const numberOfImages = await images.count();
 
         //get the src value of each image element
         let url;
-        const allImages = await images.all();
-        for await (const img of allImages) {
-            const imgSrc = await img.getAttribute("src");
+        for (let i = 0; i < numberOfImages; i++) {
+            const imgSrc = await images.nth(i).getAttribute("src");
 
             //check to see if you have a valid value in the src attribute
             expect.soft(imgSrc?.length).toBeGreaterThan(1);
@@ -99,7 +83,16 @@ webPageLink.forEach((data) => {
 
                 //if status is not 200 log the url and status code
                 if (!(response.status() === 200)) {
-                    console.log(`Failed link: ${url} Status code: ${response.status()}`);
+                    console.log(`Failed link: ${url} Status code: ${response.status()}\n`);
+
+                    let brokenImage = await images.nth(i);
+                    await brokenImage.evaluate(element => element.scrollIntoView({ block: "center" }));
+                    await brokenImage.evaluate(element => {
+                        element.style.border = '5px solid red'; // Change the border style and color as needed
+                    });
+
+                    await page.waitForTimeout(1000);
+                    await page.screenshot({ path: `tests/__screenshots__/brokenImagesTest/${data.webPage}-screenshots${i}.png`});
                 } else {
                     count++;
                 }
@@ -108,6 +101,15 @@ webPageLink.forEach((data) => {
             }
         }
         //at every end of the run log the number of broken links and where they occur for easier debugging
-        console.log(`${numberOfImages - count} links broken out of ${numberOfImages} on the ${data.webPage} link: ${data.link}`);
-    })
+        console.log(`\n${numberOfImages - count} links broken out of ${numberOfImages} on the ${data.webPage} link: \n${data.link}`);
+    });
+});
+
+
+
+test("Playwright trace demo", async({page})=>{
+    await page.goto('https://www.bmw.de/de/elektroauto/plug-in-hybrid.html#faq');
+    await page.getByRole('button', {name: 'Alle akzeptieren'}).click();
+
+    await expect(await page.locator("[alt=\"BMW Plug-in-Hybrid BMW Online Geniuss\"]")).toBeVisible();
 });
